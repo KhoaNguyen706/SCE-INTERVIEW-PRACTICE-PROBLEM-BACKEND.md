@@ -101,4 +101,13 @@ function stopMonitor(symbol: string) {
     return { success: false, message: `No active monitor for ${symbol}` };
 }
 
-module.exports = { startMonitor, getHistory, refreshNow, stopMonitor };
+function deleteHistory(symbol: string) {
+    if (!symbol || typeof symbol !== 'string') return { success: false, message: 'symbol is required' };
+    if (histories.has(symbol)) {
+        histories.delete(symbol);
+        return { success: true, message: `Deleted history for ${symbol}` };
+    }
+    return { success: false, message: `No history for ${symbol}` };
+}
+
+module.exports = { startMonitor, getHistory, refreshNow, stopMonitor, deleteHistory };

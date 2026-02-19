@@ -38,6 +38,13 @@ app.post('/stop-monitoring', (req: Request, res: Response) => {
   res.json(result);
 });
 
+app.delete('/history', (req: Request, res: Response) => {
+  const symbol = (req.query.symbol as string) || '';
+  if (!symbol) return res.status(400).json({ error: 'symbol query parameter is required' });
+  const result = monitor.deleteHistory(symbol);
+  res.json(result);
+});
+
 
 
 app.listen(3000, () => {
